@@ -1,41 +1,44 @@
 import React from "react";
+import pet from "@frontendmasters/pet";
 
-const Details = props => {
-  return (
-    <div>
-      <h1>Details page</h1>
-      <pre>
-        <code>{JSON.stringify(props, null, 2)}</code>
-      </pre>
-    </div>
-  );
-};
+class Details extends React.Component {
+  state = { loading: true };
 
-export default Details;
+  componentDidMount() {
+    pet
+      .animal(Number(this.props.id))
+      .then(({ animal }) => {
+        this.setState({
+          name: animal.name,
+          animal: animal.type,
+          breed: animal.breeds.primary,
+          location: `${animal.contact.address.city}, ${animal.contact.address.state}`,
+          description: animal.description,
+          media: animal.photos,
+          loading: false
+        });
+      })
+      .catch(err => this.setState({ error: err }));
+  }
 
-/*
-props
+  render() {
+    if (this.state.loading) {
+      return <h1>loading ... </h1>;
+    }
 
-{
-  "path": "/details/:id",
-  "id": "9468194",
-  "uri": "/details/9468194",
-  "location": {
-    "href": "http://localhost:1234/details/9468194",
-    "ancestorOrigins": {},
-    "origin": "http://localhost:1234",
-    "protocol": "http:",
-    "host": "localhost:1234",
-    "hostname": "localhost",
-    "port": "1234",
-    "pathname": "/details/9468194",
-    "search": "",
-    "hash": "",
-    "state": {
-      "key": "1561121875533"
-    },
-    "key": "1561121875533"
+    const { name, animal, breed, location, description } = this.state;
+
+    return (
+      <div className="details">
+        <div>
+          <h1>{name}</h1>
+          <h2>{`${animal} — ${breed} — ${location}`}</h2>
+          <button type="button">Adopt {name}</button>
+          <p>{description}</p>
+        </div>
+      </div>
+    );
   }
 }
 
-*/
+export default Details;

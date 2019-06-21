@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { ANIMALS } from "@frontendmasters/pet"; // ANIMALS is array with pets
+import useDropdown from "./hooks/useDropdown";
 
 const Search = () => {
   const [location, setLocation] = useState("Seattle, WA");
-  const [animal, setAnimal] = useState("dog"); // or try ""
-  const [breed, setBreed] = useState("");
+  // const [animal, setAnimal] = useState("dog"); // or try ""
+  // const [breed, setBreed] = useState("");
   const [breeds, setBreeds] = useState([]);
+  const [animal, AnimalDropdown] = useDropdown("Animal", "dog", ANIMALS);
+  const [breed, BreedDropdown] = useDropdown("Breed", "", breeds);
 
   return (
     <div className="search-params">
@@ -21,44 +24,9 @@ const Search = () => {
           />
         </label>
 
-        <label htmlFor="animal">
-          Animal
-          <select
-            id="animal"
-            value={animal}
-            onChange={e => setAnimal(e.target.value)}
-            onBlur={e => setAnimal(e.target.value)}
-          >
-            <option disabled key="Select animal" value="Select animal">
-              Select animal
-            </option>
-            {ANIMALS.map(animal => (
-              <option key={animal} value={animal}>
-                {animal}
-              </option>
-            ))}
-          </select>
-        </label>
+        <AnimalDropdown />
+        <BreedDropdown />
 
-        <label htmlFor="breed">
-          Breed
-          <select
-            id="breed"
-            value={breed}
-            onChange={e => setBreed(e.target.value)}
-            onBlur={e => setBreed(e.target.value)}
-            disabled={!breeds.length}
-          >
-            <option disabled key="Select breeds" value="Select breeds">
-              Select breeds
-            </option>
-            {breeds.map(breed => (
-              <option key={breed} value={breed}>
-                {breed}
-              </option>
-            ))}
-          </select>
-        </label>
         <button type="submit">Submit</button>
       </form>
     </div>

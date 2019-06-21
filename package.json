@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "parcel src/index.html",
+    "dev:mock": "cross-env PET_MOCK=mock npm run dev",
+    "dev": "parcel src/index.html",
+    "start": "npm run dev:mock",
     "pre_build": "rm -rf dist/ .cache/",
     "build_logic": "parcel build src/index.html",
     "build": "run-s pre_build build_logic",
@@ -16,6 +18,7 @@
   "license": "ISC",
   "devDependencies": {
     "babel-eslint": "^10.0.2",
+    "cross-env": "^5.2.0",
     "eslint": "^5.16.0",
     "eslint-config-prettier": "^5.0.0",
     "eslint-plugin-import": "^2.17.3",

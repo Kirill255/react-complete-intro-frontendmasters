@@ -5,7 +5,7 @@ import useDropdown from "./hooks/useDropdown";
 import ThemeContext from "./ThemeContext";
 
 const Search = () => {
-  const [theme] = useContext(ThemeContext); // контекст сейчас содержит ["green", () => {}], мы берём только первый аргумент [theme, setTheme]
+  const [theme, setTheme] = useContext(ThemeContext); // контекст сейчас содержит ["green", () => {}]
 
   const [location, setLocation] = useState("Seattle, WA");
   // const [animal, setAnimal] = useState("dog"); // or try ""
@@ -60,6 +60,20 @@ const Search = () => {
 
         <AnimalDropdown />
         <BreedDropdown />
+
+        <label htmlFor="location">
+          Theme
+          <select
+            value={theme}
+            onChange={e => setTheme(e.target.value)}
+            onBlur={e => setTheme(e.target.value)}
+          >
+            <option value="peru">Peru</option>
+            <option value="darkblue">Dark Blue</option>
+            <option value="chartreuse">Chartreuse</option>
+            <option value="mediumorchid">Medium Orchid</option>
+          </select>
+        </label>
 
         <button type="submit" style={{ backgroundColor: theme }}>
           Submit

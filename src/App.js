@@ -3,10 +3,12 @@ import { render } from "react-dom";
 import Search from "./Search";
 
 const App = () => (
-  <div>
-    <h1>Adopt Me!</h1>
-    <Search/>
-  </div>
+  <React.StrictMode>
+    <div>
+      <h1>Adopt Me!</h1>
+      <Search />
+    </div>
+  </React.StrictMode>
 );
 
 render(<App />, document.getElementById("root"));

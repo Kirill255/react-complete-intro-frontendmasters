@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { ANIMALS } from "@frontendmasters/pet"; // ANIMALS is array with pets
+import React, { useState, useEffect } from "react";
+import pet, { ANIMALS } from "@frontendmasters/pet"; // ANIMALS is array with pets
 import useDropdown from "./hooks/useDropdown";
 
 const Search = () => {
@@ -7,8 +7,22 @@ const Search = () => {
   // const [animal, setAnimal] = useState("dog"); // or try ""
   // const [breed, setBreed] = useState("");
   const [breeds, setBreeds] = useState([]);
-  const [animal, AnimalDropdown] = useDropdown("Animal", "dog", ANIMALS);
-  const [breed, BreedDropdown] = useDropdown("Breed", "", breeds);
+  // prettier-ignore
+  const [animal, AnimalDropdown, setAnimal] = useDropdown("Animal", "dog", ANIMALS);
+  const [breed, BreedDropdown, setBreed] = useDropdown("Breed", "", breeds);
+
+  useEffect(() => {
+    // pet.breeds("dog").then(console.log, console.error); // get http://pets.dev-apis.com/types/dog/breeds
+
+    // before request
+    setBreeds([]);
+    setBreed("");
+
+    pet.breeds(animal).then(({ breeds: apiBreeds }) => {
+      const breedsStr = apiBreeds.map(({ name }) => name); // get only names
+      setBreeds(breedsStr);
+    }, console.error);
+  }, [animal, setBreed, setBreeds]);
 
   return (
     <div className="search-params">

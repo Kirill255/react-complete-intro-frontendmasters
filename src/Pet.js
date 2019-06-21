@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "@reach/router";
 
 const Pet = ({ id, name, animal, breed, media, location }) => {
   let hero = "http://placecorgi.com/300/300"; // placeholder, if the image is not exist
@@ -7,7 +8,7 @@ const Pet = ({ id, name, animal, breed, media, location }) => {
   }
 
   return (
-    <div className="pet">
+    <Link to={`/details/${id}`} className="pet">
       <div className="image-container">
         <img src={hero} alt={name} />
       </div>
@@ -15,7 +16,7 @@ const Pet = ({ id, name, animal, breed, media, location }) => {
         <h1>{name}</h1>
         <h2>{`${animal} — ${breed} — ${location}`}</h2>
       </div>
-    </div>
+    </Link>
   );
 };
 

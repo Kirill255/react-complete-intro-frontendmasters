@@ -2,6 +2,7 @@ import React from "react";
 import pet from "@frontendmasters/pet";
 import Carousel from "./Carousel";
 import ErrorBoundary from "./ErrorBoundary";
+import ThemeContext from "./ThemeContext";
 
 class Details extends React.Component {
   state = { loading: true };
@@ -39,7 +40,13 @@ class Details extends React.Component {
         <div>
           <h1>{name}</h1>
           <h2>{`${animal} — ${breed} — ${location}`}</h2>
-          <button type="button">Adopt {name}</button>
+          <ThemeContext.Consumer>
+            {([theme]) => (
+              <button type="button" style={{ backgroundColor: theme }}>
+                Adopt {name}
+              </button>
+            )}
+          </ThemeContext.Consumer>
           <p>{description}</p>
         </div>
       </div>
@@ -56,3 +63,25 @@ export default function DetailsWithErrorBoundary(props) {
     </ErrorBoundary>
   );
 }
+
+/*
+контекст сейчас содержит ["green", () => {}], тоесть массив в терминах хуков это [theme, setTheme], нам нужно получить первый (вернее нулевой по индексу) элемент
+
+<ThemeContext.Consumer>
+  {(themeHook) => (
+    <button type="button" style={{ backgroundColor: themeHook[0] }}>
+      Adopt {name}
+    </button>
+  )}
+</ThemeContext.Consumer>
+
+или вот так
+
+<ThemeContext.Consumer>
+  {([theme]) => (
+    <button type="button" style={{ backgroundColor: theme }}>
+      Adopt {name}
+    </button>
+  )}
+</ThemeContext.Consumer>
+*/

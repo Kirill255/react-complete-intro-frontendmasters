@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import pet, { ANIMALS } from "@frontendmasters/pet"; // ANIMALS is array with pets
 import Results from "./Results";
 import useDropdown from "./hooks/useDropdown";
+import ThemeContext from "./ThemeContext";
 
 const Search = () => {
+  const [theme] = useContext(ThemeContext); // контекст сейчас содержит ["green", () => {}], мы берём только первый аргумент [theme, setTheme]
+
   const [location, setLocation] = useState("Seattle, WA");
   // const [animal, setAnimal] = useState("dog"); // or try ""
   // const [breed, setBreed] = useState("");
@@ -58,7 +61,9 @@ const Search = () => {
         <AnimalDropdown />
         <BreedDropdown />
 
-        <button type="submit">Submit</button>
+        <button type="submit" style={{ backgroundColor: theme }}>
+          Submit
+        </button>
       </form>
 
       <Results pets={pets} />

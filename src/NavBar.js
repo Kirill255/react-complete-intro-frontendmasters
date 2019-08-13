@@ -2,10 +2,16 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useState } from "react";
 import { Link } from "@reach/router";
-import { css } from "@emotion/core";
+import { css, keyframes } from "@emotion/core";
 import colors from "./colors";
 
 const color = "deeppink";
+
+const spin = keyframes`
+  to {
+    transform: rotate(360deg);
+  }
+`;
 
 const NavBar = () => {
   const [padding, setPadding] = useState(15);
@@ -26,16 +32,19 @@ const NavBar = () => {
         css={css`
           font-size: 60px;
           color: ${color};
+          display: inline-block;
+          animation: ${spin} 1s ease infinite;
 
           &:hover {
             text-decoration: underline;
             cursor: pointer;
+            animation-play-state: paused;
           }
         `}
         aria-label="logo"
         role="img"
       >
-        Logo 🐩
+        L 🐩
       </span>
     </header>
   );

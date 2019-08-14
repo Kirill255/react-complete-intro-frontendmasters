@@ -7,8 +7,9 @@
     "dev:mock": "cross-env PET_MOCK=mock npm run dev",
     "dev": "parcel src/index.html",
     "start": "npm run dev:mock",
+    "start:server": "npm -s run build && babel-node server/index.js",
     "pre_build": "rm -rf dist/ .cache/",
-    "build_logic": "parcel build src/index.html",
+    "build_logic": "parcel build --public-url ./dist/ src/index.html",
     "build": "run-s pre_build build_logic",
     "format": "prettier \"src/**/*.{js,jsx}\" --write",
     "lint": "eslint \"src/**/*.{js,jsx}\" --quiet"
@@ -17,7 +18,9 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@babel/cli": "^7.5.5",
     "@babel/core": "^7.4.5",
+    "@babel/node": "^7.5.5",
     "@babel/plugin-proposal-class-properties": "^7.4.4",
     "@babel/preset-env": "^7.4.5",
     "@babel/preset-react": "^7.0.0",

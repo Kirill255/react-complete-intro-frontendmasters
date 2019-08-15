@@ -1,8 +1,8 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, FunctionComponent } from "react";
 import { createPortal } from "react-dom";
 
-const Modal = ({ children }) => {
-  const refEl = useRef(null);
+const Modal: FunctionComponent = ({ children }) => {
+  const refEl = useRef<HTMLDivElement | null>(null);
 
   if (!refEl.current) {
     const div = document.createElement("div");
@@ -11,9 +11,13 @@ const Modal = ({ children }) => {
 
   useEffect(() => {
     const modalRoot = document.getElementById("modal");
+    if (!modalRoot || !refEl.current) return;
     modalRoot.appendChild(refEl.current);
 
-    return () => modalRoot.removeChild(refEl.current);
+    return () => {
+      if (!refEl.current) return;
+      modalRoot.removeChild(refEl.current);
+    };
   }, []);
 
   return createPortal(<div>{children}</div>, refEl.current);

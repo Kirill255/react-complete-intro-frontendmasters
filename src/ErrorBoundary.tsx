@@ -4,12 +4,14 @@ import { Link, Redirect } from "@reach/router";
 // https://reactjs.org/docs/error-boundaries.html
 // https://github.com/danburzo/react-recipes/blob/master/recipes/error-boundaries.md
 class ErrorBoundary extends React.Component {
-  private isMounted = false;
+  // https://stackoverflow.com/questions/53414723/typescript-react-avoid-setstate-on-unmounted-components
+  // isMounted is a private property of React.Component. Rename it and it should work
+  private _isMounted: boolean = false;
 
   public state = { hasError: false, redirect: false };
 
   public componentDidMount() {
-    this.isMounted = true;
+    this._isMounted = true;
   }
 
   public static getDerivedStateFromError(error: Error) {
@@ -25,7 +27,7 @@ class ErrorBoundary extends React.Component {
   public componentDidUpdate() {
     if (this.state.hasError) {
       setTimeout(() => {
-        if (this.isMounted) {
+        if (this._isMounted) {
           this.setState({ redirect: true });
         }
       }, 5000);
@@ -33,7 +35,7 @@ class ErrorBoundary extends React.Component {
   }
 
   public componentWillUnmount() {
-    this.isMounted = false;
+    this._isMounted = false;
   }
 
   public render() {

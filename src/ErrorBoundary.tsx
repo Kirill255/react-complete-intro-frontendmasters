@@ -1,42 +1,42 @@
-import React from "react";
+import React, { ErrorInfo } from "react";
 import { Link, Redirect } from "@reach/router";
 
 // https://reactjs.org/docs/error-boundaries.html
 // https://github.com/danburzo/react-recipes/blob/master/recipes/error-boundaries.md
 class ErrorBoundary extends React.Component {
-  _isMounted = false;
+  private isMounted = false;
 
-  state = { hasError: false };
+  public state = { hasError: false, redirect: false };
 
-  componentDidMount() {
-    this._isMounted = true;
+  public componentDidMount() {
+    this.isMounted = true;
   }
 
-  static getDerivedStateFromError(error) {
+  public static getDerivedStateFromError(error: Error) {
     // Update state so the next render will show the fallback UI.
     return { hasError: true };
   }
 
-  componentDidCatch(error, info) {
+  public componentDidCatch(error: Error, info: ErrorInfo) {
     // You can also log the error to an error reporting service
     console.error("ErrorBoundary caught an error: ", error, info);
   }
 
-  componentDidUpdate() {
+  public componentDidUpdate() {
     if (this.state.hasError) {
       setTimeout(() => {
-        if (this._isMounted) {
+        if (this.isMounted) {
           this.setState({ redirect: true });
         }
       }, 5000);
     }
   }
 
-  componentWillUnmount() {
-    this._isMounted = false;
+  public componentWillUnmount() {
+    this.isMounted = false;
   }
 
-  render() {
+  public render() {
     if (this.state.redirect) {
       return <Redirect to="/" />;
     }

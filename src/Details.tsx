@@ -1,16 +1,38 @@
 import React from "react";
-import pet from "@frontendmasters/pet";
-import { navigate } from "@reach/router";
+import pet, { Photo } from "@frontendmasters/pet";
+import { navigate, RouteComponentProps } from "@reach/router";
 import Modal from "./Modal";
 import Carousel from "./Carousel";
 import ErrorBoundary from "./ErrorBoundary";
 import ThemeContext from "./ThemeContext";
 
-class Details extends React.Component {
-  state = { loading: true, showModal: false };
+/* params ->  first: props, second: state
+class Details extends React.Component<RouteComponentProps<{ id: string }>, { url: string, name: string, ... }> {}
 
-  componentDidMount() {
+Or we can set a default value for all of these properties in state,
+This only works with public class properties. If you're doing this inside of a constructor, this doesn't work. Then you should use the method above
+*/
+
+class Details extends React.Component<RouteComponentProps<{ id: string }>> {
+  public state = {
+    loading: true,
+    showModal: false,
+    url: "",
+    name: "",
+    animal: "",
+    breed: "",
+    location: "",
+    description: "",
+    media: [] as Photo[]
+  };
+
+  public componentDidMount() {
     // throw new Error("lol");
+
+    if (!this.props.id) {
+      navigate("/");
+      return;
+    }
 
     pet
       .animal(Number(this.props.id))
@@ -26,14 +48,15 @@ class Details extends React.Component {
           loading: false
         });
       })
-      .catch(err => this.setState({ error: err }));
+      .catch((err: Error) => this.setState({ error: err }));
   }
 
-  toggleModal = () => this.setState({ showModal: !this.state.showModal });
+  public toggleModal = () =>
+    this.setState({ showModal: !this.state.showModal });
 
-  adopt = () => navigate(this.state.url);
+  public adopt = () => navigate(this.state.url);
 
-  render() {
+  public render() {
     if (this.state.loading) {
       return <h1>loading ... </h1>;
     }
@@ -81,7 +104,8 @@ class Details extends React.Component {
 
 // export default Details;
 
-export default function DetailsWithErrorBoundary(props) {
+// prettier-ignore
+export default function DetailsWithErrorBoundary(props: RouteComponentProps<{ id: string }>) {
   return (
     <ErrorBoundary>
       <Details {...props} />

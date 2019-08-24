@@ -64,3 +64,17 @@ https://btholt.github.io/complete-intro-to-react-v5
 - **Note ** `tslint-config-prettier` must be last in order
 
 5. Add [tslint](https://marketplace.visualstudio.com/items?itemName=ms-vscode.vscode-typescript-tslint-plugin) extension to VS Code made by Microsoft (not egamma(deprecated))
+
+## Tips
+
+If you or your colleagues are not using Visual Studio Code. You can run type checking before commit, just to make sure that everything compiles correctly.
+
+```
+"scripts": {
+  "typecheck": "tsc --noEmit"
+}
+```
+
+`npm run typecheck`
+
+And so nothing happened here, so it means everything passed.

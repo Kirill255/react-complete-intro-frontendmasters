@@ -11,7 +11,8 @@
     "build_logic": "parcel build src/index.html",
     "build": "run-s pre_build build_logic",
     "format": "prettier \"src/**/*.{js,jsx}\" --write",
-    "lint": "tslint --project"
+    "lint": "tslint --project",
+    "typecheck": "tsc --noEmit"
   },
   "keywords": [],
   "author": "",

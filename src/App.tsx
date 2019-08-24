@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, FunctionComponent } from "react";
 import { render } from "react-dom";
 import { Router, Link } from "@reach/router";
 import Search from "./Search";
 import Details from "./Details";
 import ThemeContext from "./ThemeContext";
 
-const App = () => {
+const App: FunctionComponent = () => {
   const themeHook = useState("darkblue"); // theme это [value, setValue] и мы сделали контекст с дэфолтным значением вида ["green", () => {}]
 
   return (

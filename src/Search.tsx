@@ -1,20 +1,21 @@
-import React, { useState, useEffect, useContext } from "react";
-import pet, { ANIMALS } from "@frontendmasters/pet"; // ANIMALS is array with pets
+import React, { useState, useEffect, useContext, FunctionComponent } from "react";
+import { RouteComponentProps } from "@reach/router";
+import pet, { ANIMALS, Animal } from "@frontendmasters/pet"; // ANIMALS is array with pets
 import Results from "./Results";
 import useDropdown from "./hooks/useDropdown";
 import ThemeContext from "./ThemeContext";
 
-const Search = () => {
+const Search: FunctionComponent<RouteComponentProps> = () => {
   const [theme, setTheme] = useContext(ThemeContext); // контекст сейчас содержит ["green", () => {}]
 
   const [location, setLocation] = useState("Seattle, WA");
   // const [animal, setAnimal] = useState("dog"); // or try ""
   // const [breed, setBreed] = useState("");
-  const [breeds, setBreeds] = useState([]);
+  const [breeds, setBreeds] = useState([] as string[]);
   // prettier-ignore
   const [animal, AnimalDropdown, setAnimal] = useDropdown("Animal", "dog", ANIMALS);
   const [breed, BreedDropdown, setBreed] = useDropdown("Breed", "", breeds);
-  const [pets, setPets] = useState([]);
+  const [pets, setPets] = useState([] as Animal[]);
 
   async function requestPets() {
     const { animals } = await pet.animals({

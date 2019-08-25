@@ -10,6 +10,44 @@ https://btholt.github.io/complete-intro-to-react-v5
 
 ## testing
 
-1. `npm install -D jest @testing-library/react`
+1. `npm install -D jest babel-jest @testing-library/react`
 
 2. Create folder `__tests__`
+
+3. Add option to .babelrc [link](https://jestjs.io/docs/en/getting-started#using-babel) [link2](https://stackoverflow.com/a/56267658)
+
+```json
+{
+  "presets": [["@babel/preset-env", { "targets": { "node": "current" } }]]
+}
+```
+
+4. Add test script to package.json
+
+```json
+{
+  "scripts": {
+    "test": "jest"
+  }
+}
+```
+
+5. Add jest variable to env section in .eslintrc.json
+
+```json
+{
+  "env": {
+    "jest": true
+  }
+}
+```
+
+## warning
+
+> It looks like you're using a version of react-dom that supports the "act" function, but not an awaitable version of "act" which you will need. Please upgrade to at least react-dom@16.9.0 to remove this warning.
+
+Updated react-dom to 16.9.0
+
+> TypeError: Cannot read property 'current' of undefined
+
+Updated react to 16.9.0 and it started working again. https://github.com/testing-library/react-testing-library/issues/439

@@ -6,7 +6,7 @@ import Search from "../Search";
 afterEach(cleanup);
 
 test("Search", async () => {
-  const { getByTestId, getByText } = render(<Search />);
+  const { container, getByTestId, getByText } = render(<Search />);
 
   const animalDropdown = getByTestId("use-dropdown-animal");
   expect(animalDropdown.children.length).toEqual(ANIMALS.length + 1);
@@ -20,4 +20,7 @@ test("Search", async () => {
   fireEvent(getByText("Submit"), new MouseEvent("click"));
   expect(pet.animals).toHaveBeenCalled(); // the method to request pets doesn't work as an async await
   expect(searchResults.children.length).toEqual(_dogs.length);
+
+  // before run test
+  expect(container.firstChild).toMatchInlineSnapshot();
 });

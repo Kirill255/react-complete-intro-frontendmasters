@@ -51,3 +51,31 @@ Updated react-dom to 16.9.0
 > TypeError: Cannot read property 'current' of undefined
 
 Updated react to 16.9.0 and it started working again. https://github.com/testing-library/react-testing-library/issues/439
+
+## snapshots
+
+Before running the test
+
+```js
+expect(container.firstChild).toMatchInlineSnapshot();
+```
+
+After the first run of the test. He is fixed
+
+```js
+expect(container.firstChild).toMatchInlineSnapshot(`
+  <div
+    class="search-params"
+  >
+  // ... other markup
+  </div>
+`);
+```
+
+if after we change something in the markup, the test will fail
+
+if we want to update our snapshot we must run a test with a flag `--updateSnapshot` or `-u`
+
+Full command
+
+`npm run test -- --updateSnapshot` or `npm run test -- -u`
